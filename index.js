@@ -7,5 +7,6 @@ module.exports = {
     query: require("./src/query/query"),
     asyncQuery: require("./src/query/query-async"),
     log: require("./src/log"),
-    i18n: require("./src/i18n")
+    i18n: require("./src/i18n"),
+    reference: require("./src/reference")
 }
