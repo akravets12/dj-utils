@@ -1,6 +1,6 @@
 {
   "name": "dj-utils",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Utilites for dj project",
   "main": "index.js",
   "scripts": {
