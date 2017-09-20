@@ -7,12 +7,12 @@ var plain = function(object) {
     var result = [];
 
     var pathes = function(o, p) {
-    	if (util.isFunction(o) || util.isDate(o) || util.isString(o) || util.isNumber(o) || util.isBoolean(o) || util.isNull(o)) {
+        if (util.isFunction(o) || util.isDate(o) || util.isString(o) || util.isNumber(o) || util.isBoolean(o) || util.isNull(o)) {
             result.push({ path: p, value: o })
             return
         }
 
-        if (o instanceof Promise){
+        if (o instanceof Promise) {
             result.push({ path: p, value: o })
             return
         }
@@ -34,14 +34,14 @@ var plain = function(object) {
 
     }
 
-    if ( util.isFunction(object) 
-        || util.isDate(object) 
-        || util.isString(object) 
-        || util.isNumber(object) 
-        || util.isBoolean(object) 
-        || util.isNull(object)
-        || object instanceof Promise
-        ) {
+    if (util.isFunction(object) ||
+        util.isDate(object) ||
+        util.isString(object) ||
+        util.isNumber(object) ||
+        util.isBoolean(object) ||
+        util.isNull(object) ||
+        object instanceof Promise
+    ) {
         result.push({
             path: ".",
             value: object
@@ -107,7 +107,7 @@ var apply = function(o, p) {
     }
 
     p.forEach(function(item) {
-        applyPath(o, item.path.replace(/([^\.])(\[)/g,"$1.["), item.value)
+        applyPath(o, item.path.replace(/([^\.])(\[)/g, "$1.["), item.value)
     })
 
     return o;
@@ -117,8 +117,8 @@ var apply = function(o, p) {
 
 var deepCopy = function(obj) {
     if (obj instanceof Promise) return obj;
-    if (util.isDate(obj)) return obj;//new Date(obj)
-    if (util.isString(obj)) return obj;//new String(obj)
+    if (util.isDate(obj)) return obj; //new Date(obj)
+    if (util.isString(obj)) return obj; //new String(obj)
 
     if (util.isNumber(obj) || util.isBoolean(obj) || util.isFunction(obj) || util.isNull(obj) || util.isUndefined(obj)) return obj;
 
@@ -139,15 +139,15 @@ deepCopy.plain = function(obj) {
 
 deepCopy.getProperty = (o, p) => {
     let current = o;
-    if(!p) return o;
+    if (!p) return o;
     p.split(".").forEach((item) => {
         let key;
-        if(current && current != null){
-            key = (item.indexOf("[") == 0)
-                ? new Number(item.substring(1, item.length - 1))
-                : item;
+        if (current && current != null) {
+            key = (item.indexOf("[") == 0) ?
+                new Number(item.substring(1, item.length - 1)) :
+                item;
             current = current[key]
-        }    
+        }
     });
     return current;
 }
@@ -158,5 +158,5 @@ module.exports = {
     copy: deepCopy,
     apply: apply,
     plain: plain,
-    getProperty:getProperty
+    getProperty: getProperty
 }
