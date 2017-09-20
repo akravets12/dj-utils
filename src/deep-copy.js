@@ -158,5 +158,5 @@ module.exports = {
     copy: deepCopy,
     apply: apply,
     plain: plain,
-    getProperty: getProperty
+    getProperty: deepCopy.getProperty
 }
