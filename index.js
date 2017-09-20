@@ -3,5 +3,7 @@ module.exports = {
     copy: d.deepCopy,
     apply: d.apply,
     plain: d.plain,
-    getProperty:d.getProperty
+    getProperty:d.getProperty,
+    query: require("./src/query/query"),
+    asyncQuery: require("./src/query/query-async")
 }
