@@ -6,5 +6,6 @@ module.exports = {
     getProperty:d.getProperty,
     query: require("./src/query/query"),
     asyncQuery: require("./src/query/query-async"),
-    log: require("./src/log")
+    log: require("./src/log"),
+    i18n: require("./src/i18n")
 }
