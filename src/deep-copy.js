@@ -1,6 +1,6 @@
 var util = require("util");
-// var _ = require("lodash-node");
-// var Promise = require('bluebird')
+var _ = require("lodash-node");
+var Promise = require('bluebird')
 
 
 var plain = function(object) {
