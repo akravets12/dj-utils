@@ -19,15 +19,11 @@ class ReferenceParser {
     const collectionRE  = /([a-zA-Z_]+[a-zA-Z_0-9]*)(?=\?)/gi;
 
     const collection = str.match(collectionRE);
-    if (collection == null)
-      throw new ReferenceParserError('Collection or filter cannot be recognized');
-
     const filter = str.match(FILTER_RE);
-    if (filter == null)
-      throw new ReferenceParserError('Collection or filter cannot be recognized');
-
-
     const path = str.match(pathRE);
+
+    if (!collection || !filter)
+      throw new ReferenceParserError('Collection or filter cannot be recognized');
 
     return {
         source: 'collection',
@@ -42,27 +38,25 @@ class ReferenceParser {
     const urlRE = /^(?:([A-Za-z]+):)?(\/{0,3})([0-9.\-A-Za-z]+)(?::(\d+))?(?:\/([^?#]*))?(?:\?([^#]*))?(?:#(.*))?$/;
 
     const url = str.match(urlRE);
-    if (url == null)
-      throw new ReferenceParserError('Url or filter cannot be recognized');
 
-    const filter = str.match(FILTER_RE);
-    if (filter == null)
-      throw new ReferenceParserError('Url or filter cannot be recognized');
+    if (!url)
+      throw new ReferenceParserError('Url cannot be recognized');
 
     return {
         source: 'url',
-        url: url[0],
-        filter: filter[0]
+        url: url[0]
     };
   }
 
   static parseScopeReference(str) {
 
-    str.replace(SCOPE_MARKER, '');
-
     const scopeRE = /^[a-zA-Z0-9]*[a-zA-Z]+[a-zA-Z0-9]*$/gi;
 
-    const scope = str.match(scopeRE);
+    const strSplitted = str.split(SCOPE_MARKER);
+    const scope = strSplitted[1].match(scopeRE);
+
+    if (!scope)
+      throw new ReferenceParserError('Scope name cannot be specified');
 
     return {
       source: 'scope',
@@ -72,20 +66,18 @@ class ReferenceParser {
 }
 
 module.exports = {
-  parse(str) {
+	parse(str) {
 
-    switch (str) {
-      case str.contains(COLLECTION_MARKER):
-        return ReferenceParser.parseCollectionReference(str);
+    if (str.contains(COLLECTION_MARKER))
+      return ReferenceParser.parseCollectionReference(str.replace(COLLECTION_MARKER, ''));
 
-      case str.contains(URL_MARKER):
-        return ReferenceParser.parseUrlReference(str);
+    if (str.contains(URL_MARKER))
+      return ReferenceParser.parseUrlReference(str.replace(URL_MARKER, ''));
 
-      case str.contains(SCOPE_MARKER):
-        return ReferenceParser.parseScopeReference(str);
+    if str.contains(SCOPE_MARKER))
+      return ReferenceParser.parseScopeReference(str.replace(SCOPE_MARKER, ''));
 
-      default:
-        throw new ReferenceParserError('Invalid data source');
-    }
-  }
+    throw new ReferenceParserError('Invalid data source');
+
+	}
 }
