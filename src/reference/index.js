@@ -50,9 +50,11 @@ class ReferenceParser {
 
   static parseScopeReference(str) {
 
-    const scopeRE = /^[a-zA-Z0-9]*[a-zA-Z]+[a-zA-Z0-9]*$/gi;
+    const scopeRE = /\b\w+/gi;
 
     const strSplitted = str.split(SCOPE_MARKER);
+    console.log(strSplitted[1]);
+    console.log(strSplitted[1].match(scopeRE));
     const scope = strSplitted[1].match(scopeRE);
 
     if (!scope)
@@ -66,18 +68,18 @@ class ReferenceParser {
 }
 
 module.exports = {
-	parse(str) {
+  parse(str) {
 
     if (str.contains(COLLECTION_MARKER))
-      return ReferenceParser.parseCollectionReference(str.replace(COLLECTION_MARKER, ''));
+      return ReferenceParser.parseCollectionReference(str);
 
     if (str.contains(URL_MARKER))
-      return ReferenceParser.parseUrlReference(str.replace(URL_MARKER, ''));
+      return ReferenceParser.parseUrlReference(str);
 
-    if str.contains(SCOPE_MARKER))
-      return ReferenceParser.parseScopeReference(str.replace(SCOPE_MARKER, ''));
+    if (str.contains(SCOPE_MARKER))
+      return ReferenceParser.parseScopeReference(str);
 
     throw new ReferenceParserError('Invalid data source');
 
-	}
+  }
 }
